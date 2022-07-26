@@ -1,5 +1,7 @@
 package globallogic.evaluate.msglsignup.controller;
 
+import globallogic.evaluate.msglsignup.dto.CreateUserDto;
+import globallogic.evaluate.msglsignup.dto.Mapper;
 import globallogic.evaluate.msglsignup.model.User;
 import globallogic.evaluate.msglsignup.service.SignUpService;
 import org.springframework.http.HttpStatus;
@@ -10,14 +12,17 @@ import org.springframework.web.bind.annotation.*;
 public class SignUpController {
 
     private final SignUpService signUpService;
+    private final Mapper mapper;
 
-    public SignUpController(SignUpService signUpService) {
+    public SignUpController(SignUpService signUpService, Mapper mapper) {
         this.signUpService = signUpService;
+        this.mapper = mapper;
     }
 
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewUser(@RequestBody User user) {
+    public void createNewUser(@RequestBody CreateUserDto createUserDto) {
+        User user = mapper.toUser(createUserDto);
         this.signUpService.saveNewUser(user);
     }
 

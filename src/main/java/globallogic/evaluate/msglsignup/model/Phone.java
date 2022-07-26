@@ -16,4 +16,7 @@ public class Phone {
     private int citycode;
     private String countrycode;
 
+    public void setNumber(long number) {
+        this.number = number;
+    }
 }
