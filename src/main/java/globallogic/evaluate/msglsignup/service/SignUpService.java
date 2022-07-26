@@ -1,18 +1,7 @@
 package globallogic.evaluate.msglsignup.service;
 
-import globallogic.evaluate.msglsignup.web.model.User;
-import globallogic.evaluate.msglsignup.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import globallogic.evaluate.msglsignup.model.User;
 
-@Service
-public class SignUpService {
-
-    @Autowired
-    UserRepo userRepository;
-
-    public void saveNewUser(User user) {
-        userRepository.save(user);
-    }
-
+public interface SignUpService {
+    void saveNewUser(User user);
 }

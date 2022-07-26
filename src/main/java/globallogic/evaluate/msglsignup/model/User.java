@@ -1,4 +1,4 @@
-package globallogic.evaluate.msglsignup.web.model;
+package globallogic.evaluate.msglsignup.model;
 
 import lombok.Data;
 

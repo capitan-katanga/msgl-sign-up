@@ -1,6 +1,6 @@
-package globallogic.evaluate.msglsignup.web.controller;
+package globallogic.evaluate.msglsignup.controller;
 
-import globallogic.evaluate.msglsignup.web.model.User;
+import globallogic.evaluate.msglsignup.model.User;
 import globallogic.evaluate.msglsignup.service.SignUpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
