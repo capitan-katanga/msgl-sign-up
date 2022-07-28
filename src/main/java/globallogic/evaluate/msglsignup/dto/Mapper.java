@@ -6,6 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class Mapper {
     public User toUser(CreateUserDto createUserDto) {
-        return new User(createUserDto.getId(), createUserDto.getName(), createUserDto.getEmail(), createUserDto.getPassword(), createUserDto.getPhones());
+        return User.builder()
+                .id(createUserDto.getId())
+                .name(createUserDto.getName())
+                .email(createUserDto.getEmail())
+                .password(createUserDto.getPassword())
+                .email(createUserDto.getEmail())
+                .phones(createUserDto.getPhones())
+                .build();
     }
 }

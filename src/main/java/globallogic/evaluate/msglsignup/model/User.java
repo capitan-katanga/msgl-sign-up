@@ -1,6 +1,7 @@
 package globallogic.evaluate.msglsignup.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
+@Builder
 public class User {
 
     @Id

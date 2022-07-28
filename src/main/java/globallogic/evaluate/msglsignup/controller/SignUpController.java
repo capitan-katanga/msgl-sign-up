@@ -7,6 +7,8 @@ import globallogic.evaluate.msglsignup.service.SignUpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequestMapping("/api/v1")
 @RestController
 public class SignUpController {
@@ -21,7 +23,7 @@ public class SignUpController {
 
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewUser(@RequestBody CreateUserDto createUserDto) {
+    public void createNewUser(@Valid @RequestBody CreateUserDto createUserDto) {
         User user = mapper.toUser(createUserDto);
         this.signUpService.saveNewUser(user);
     }
