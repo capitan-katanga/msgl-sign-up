@@ -7,12 +7,25 @@ import org.springframework.stereotype.Component;
 public class Mapper {
     public User toUser(CreateUserDto createUserDto) {
         return User.builder()
-                .id(createUserDto.getId())
+                .created(createUserDto.getCreated())
+                .isActive(createUserDto.isActive())
                 .name(createUserDto.getName())
                 .email(createUserDto.getEmail())
                 .password(createUserDto.getPassword())
-                .email(createUserDto.getEmail())
                 .phones(createUserDto.getPhones())
                 .build();
     }
+
+    public GetUserDto toGetUserDto(User user) {
+        return GetUserDto.builder()
+                .id(user.getId())
+                .created(user.getCreated())
+                .isActive(user.isActive())
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .phones(user.getPhones())
+                .build();
+    }
+
 }

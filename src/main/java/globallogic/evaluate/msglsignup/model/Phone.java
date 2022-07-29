@@ -1,6 +1,7 @@
 package globallogic.evaluate.msglsignup.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -8,7 +9,9 @@ import javax.persistence.*;
 @Table(name = "phones")
 @Entity
 @Data
+@NoArgsConstructor
 public class Phone {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -16,7 +19,4 @@ public class Phone {
     private int citycode;
     private String countrycode;
 
-    public void setNumber(long number) {
-        this.number = number;
-    }
 }
