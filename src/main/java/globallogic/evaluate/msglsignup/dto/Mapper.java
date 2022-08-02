@@ -8,6 +8,7 @@ public class Mapper {
     public User toUser(CreateUserDto createUserDto) {
         return User.builder()
                 .created(createUserDto.getCreated())
+                .token(createUserDto.getToken())
                 .isActive(createUserDto.isActive())
                 .name(createUserDto.getName())
                 .email(createUserDto.getEmail())
@@ -20,6 +21,7 @@ public class Mapper {
         return GetUserDto.builder()
                 .id(user.getId())
                 .created(user.getCreated())
+                .token(user.getToken())
                 .isActive(user.isActive())
                 .name(user.getName())
                 .email(user.getEmail())

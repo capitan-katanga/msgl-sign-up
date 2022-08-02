@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Basic
+    @Column(nullable = false)
     private LocalDateTime created;
     private LocalDateTime lastLogin;
     private String token;
@@ -29,6 +29,7 @@ public class User {
     private String name;
     @Column(unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user"))
