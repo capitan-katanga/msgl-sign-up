@@ -7,4 +7,5 @@ public interface SignUpService {
 
     GetUserDto saveNewUser(CreateUserDto user);
 
+    GetUserDto getUserDetail(String jwt);
 }

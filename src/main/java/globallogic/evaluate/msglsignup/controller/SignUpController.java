@@ -6,10 +6,7 @@ import globallogic.evaluate.msglsignup.service.SignUpService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,6 +20,12 @@ public class SignUpController {
     @PostMapping("/sign-up")
     public ResponseEntity<GetUserDto> createNewUser(@Valid @RequestBody CreateUserDto userDto) {
         return new ResponseEntity<>(signUpService.saveNewUser(userDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/login/{token}")
+    public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("token") String jwt) {
+        return new ResponseEntity<>(signUpService.getUserDetail(jwt),HttpStatus.ACCEPTED);
+
     }
 
 }
