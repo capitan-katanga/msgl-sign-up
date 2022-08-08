@@ -26,16 +26,16 @@ public class SignUpServiceImpl implements SignUpService {
         userOptional.ifPresent(user1 -> {
             throw new MailAlreadyRegisteredException("The email: " + userDto.getEmail() + " is already registered");
         });
-        userDto.setToken(jwtUtilService.generateToken(userDto));
+        //userDto.setToken(jwtUtilService.generateToken(userDto));
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = mapper.toUser(userDto);
         userRepository.save(user);
         return mapper.toGetUserDto(user);
     }
 
-    public GetUserDto getUserDetail(String token) {
-        User user = userRepository.findByToken(token).orElseThrow(() -> {
-            throw new RuntimeException("no anda nada");
+    public GetUserDto getUserDetail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> {
+            throw new RuntimeException("El usuario no existe");
         });
         return mapper.toGetUserDto(user);
     }
