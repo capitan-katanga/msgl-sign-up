@@ -34,6 +34,15 @@ public class ControllerExceptionHandler {
                 .detail(exception.getMessage()).build());
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorMessage userNotFound(UserNotFoundException exception) {
+        return getErrorMessage(ErrorDetail.builder()
+                .timestamp(getTimestamp())
+                .codigo(HttpStatus.NOT_FOUND.toString())
+                .detail(exception.getMessage()).build());
+    }
+
     public ErrorMessage getErrorMessage(ErrorDetail errorDetail) {
         List<ErrorDetail> errorDetails = new ArrayList<>();
         errorDetails.add(errorDetail);

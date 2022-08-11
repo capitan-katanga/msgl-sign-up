@@ -17,7 +17,6 @@ public class GetUserDto {
     private LocalDateTime created;
     @JsonFormat(pattern = "MMM dd, yyyy hh:mm:ss a")
     private LocalDateTime lastLogin;
-    private String token;
     private boolean isActive;
     private String name;
     private String email;

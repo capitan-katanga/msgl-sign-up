@@ -13,10 +13,9 @@ import java.util.List;
 @Builder
 public class CreateUserDto {
 
-    private final LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime created;
     private LocalDateTime lastLogin;
-    private String token;
-    private final boolean isActive = true;
+    private boolean isActive;
     private String name;
     @NotEmpty(message = "Email may not be empty")
     @Email(message = "Invalid email")

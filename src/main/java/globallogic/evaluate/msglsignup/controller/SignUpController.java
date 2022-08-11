@@ -22,9 +22,9 @@ public class SignUpController {
         return new ResponseEntity<>(signUpService.saveNewUser(userDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/login/{token}")
-    public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("token") String jwt) {
-        return new ResponseEntity<>(signUpService.getUserDetail(jwt),HttpStatus.ACCEPTED);
+    @GetMapping("/getUserDetail/{userId}")
+    public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("userId") Integer userId) {
+        return new ResponseEntity<>(signUpService.getUserDetailById(userId),HttpStatus.ACCEPTED);
 
     }
 

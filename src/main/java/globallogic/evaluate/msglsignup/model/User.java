@@ -24,7 +24,6 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime created;
     private LocalDateTime lastLogin;
-    private String token;
     private boolean isActive;
     private String name;
     @Column(unique = true)
