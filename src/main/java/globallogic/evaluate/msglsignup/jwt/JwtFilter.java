@@ -1,7 +1,8 @@
 package globallogic.evaluate.msglsignup.jwt;
 
 import globallogic.evaluate.msglsignup.service.UserDetailsServiceImpl;
-import lombok.AllArgsConstructor;
+import io.jsonwebtoken.JwtException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,31 +16,32 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
-@AllArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         if (!hasAuthorizationBearer(request)) {
             filterChain.doFilter(request, response);
             return;
         }
-
         String token = getAccessToken(request);
-
         if (!jwtUtil.validateAccessToken(token)) {
             filterChain.doFilter(request, response);
             return;
         }
-
         setAuthenticationContext(token, request);
         filterChain.doFilter(request, response);
     }
+
 
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
@@ -47,16 +49,14 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private String getAccessToken(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
+        String header = Optional.ofNullable(request.getHeader("Authorization")).orElseThrow(() -> new JwtException("Access denied re loco"));
         return header.split(" ")[1].trim();
     }
 
     private void setAuthenticationContext(String token, HttpServletRequest request) {
         UserDetails userDetails = getUserDetails(token);
-        UsernamePasswordAuthenticationToken
-                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        authentication.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request));
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 

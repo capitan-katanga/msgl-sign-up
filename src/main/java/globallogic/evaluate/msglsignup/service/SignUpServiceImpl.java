@@ -8,12 +8,14 @@ import globallogic.evaluate.msglsignup.exception.UserNotFoundException;
 import globallogic.evaluate.msglsignup.model.User;
 import globallogic.evaluate.msglsignup.repository.UserRepo;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Log4j2
 @Service
 @AllArgsConstructor
 public class SignUpServiceImpl implements SignUpService {
@@ -32,6 +34,7 @@ public class SignUpServiceImpl implements SignUpService {
         userDto.setActive(true);
         User user = mapper.toUser(userDto);
         userRepository.save(user);
+        log.info("Registered user: {}", user);
         return mapper.toGetUserDto(user);
     }
 
@@ -39,6 +42,7 @@ public class SignUpServiceImpl implements SignUpService {
         User user = userRepository.findById(userId).orElseThrow(() -> {
             throw new UserNotFoundException("User id not found");
         });
+        log.info("Found user detail by id: {}", user);
         return mapper.toGetUserDto(user);
     }
 

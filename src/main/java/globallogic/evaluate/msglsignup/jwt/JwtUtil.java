@@ -1,23 +1,22 @@
 package globallogic.evaluate.msglsignup.jwt;
 
 import io.jsonwebtoken.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Log4j2
 @Component
 public class JwtUtil {
 
+    @Autowired
     private static final long EXPIRE_DURATION = 2 * 60 * 60 * 1000;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
-
-
     @Value("${app.jwt.secret}")
-    private String secretKey;
+    protected String SECRET_KEY;
 
     public String generateAccessToken(String email) {
         return Jwts.builder()
@@ -25,24 +24,24 @@ public class JwtUtil {
                 .setIssuer("global logic")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
     public boolean validateAccessToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException ex) {
-            LOGGER.error("JWT expired", ex);
+            log.error("JWT expired", ex);
         } catch (IllegalArgumentException ex) {
-            LOGGER.error("Token is null, empty or only whitespace", ex);
+            log.error("Token is null, empty or only whitespace", ex);
         } catch (MalformedJwtException ex) {
-            LOGGER.error("JWT is invalid", ex);
+            log.error("JWT is invalid", ex);
         } catch (UnsupportedJwtException ex) {
-            LOGGER.error("JWT is not supported", ex);
+            log.error("JWT is not supported", ex);
         } catch (SignatureException ex) {
-            LOGGER.error("Signature validation failed");
+            log.error("Signature validation failed");
         }
 
         return false;
@@ -54,7 +53,7 @@ public class JwtUtil {
 
     private Claims parseClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(secretKey)
+                .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
     }
