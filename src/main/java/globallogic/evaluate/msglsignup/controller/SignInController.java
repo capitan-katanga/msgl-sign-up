@@ -28,9 +28,7 @@ public class SignInController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<GetAccessTokenDto> signIn(@RequestBody @Valid SignInDto signInDto) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInDto.getEmail(), signInDto.getPassword()
-                ));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInDto.getEmail(), signInDto.getPassword()));
         String accessToken = jwtUtil.generateAccessToken(signInDto.getEmail());
         signInService.updateLastLoginDate(signInDto.getEmail());
         return new ResponseEntity<>(new GetAccessTokenDto(accessToken), HttpStatus.OK);
