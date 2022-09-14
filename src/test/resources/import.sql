@@ -1,0 +1,2 @@
+insert into users (id, created, email, is_active, name, password) values (1, '2022-09-07T15:37:51.564616', 'pedro@gmail.com', 'true', 'pedro', '$2a$10$WdAOczbzvssoR5Eubw2TxOBbXXG36Chu6sO90mCMOThsWIDWi27');
+insert into phones (id, countrycode, citycode, number, user_id) values (2, '+54', 315, 2342847, 1);

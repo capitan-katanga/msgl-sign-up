@@ -1,13 +1,11 @@
 package globallogic.evaluate.msglsignup.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.validation.constraints.Email;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 public class SignInDto {
     @Email

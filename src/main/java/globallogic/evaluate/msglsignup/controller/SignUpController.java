@@ -24,7 +24,7 @@ public class SignUpController {
 
     @GetMapping("/getUserDetail/{userId}")
     public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("userId") Integer userId) {
-        return new ResponseEntity<>(signUpService.getUserDetailById(userId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(signUpService.getUserDetailById(userId), HttpStatus.OK);
 
     }
 
