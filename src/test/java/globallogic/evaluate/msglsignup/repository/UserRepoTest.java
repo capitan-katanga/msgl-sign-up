@@ -26,7 +26,7 @@ class UserRepoTest {
                 () -> Assertions.assertEquals("pedro", user.get().getName()),
                 () -> Assertions.assertNotNull(user.get().getCreated()),
                 () -> Assertions.assertNull(user.get().getLastLogin()),
-                () -> Assertions.assertTrue(user.get().getPhones().size() > 0)
+                () -> Assertions.assertFalse(user.get().getPhones().isEmpty())
         );
     }
 
@@ -36,6 +36,5 @@ class UserRepoTest {
         Optional<User> user = userRepository.findByEmail("lalala@gmail.com");
         Assertions.assertFalse(user.isPresent());
     }
-
 
 }

@@ -31,14 +31,14 @@ class SignUpServiceImplTest {
     @Test
     @DisplayName("Save new user with all parameters")
     void saveNewUserAllParametersTest() {
-        Mockito.when(userRepository.findByEmail("ignacioencizo@gmail.com")).thenReturn(Optional.empty());
+        Mockito.when(userRepository.findByEmail("dummy@gmail.com")).thenReturn(Optional.empty());
         CreateUserDto createUserDto = generateCreateUserDto(DataMock.createUser01());
         GetUserDto getUserDto = signUpService.saveNewUser(createUserDto);
         Assertions.assertAll(
                 () -> Assertions.assertNotNull(getUserDto.getCreated()),
                 () -> Assertions.assertNull(getUserDto.getLastLogin()),
                 () -> Assertions.assertTrue(getUserDto.isActive()),
-                () -> Assertions.assertTrue(getUserDto.getPhones().size() > 0)
+                () -> Assertions.assertFalse(getUserDto.getPhones().isEmpty())
         );
     }
 
@@ -46,7 +46,8 @@ class SignUpServiceImplTest {
     @DisplayName("Save new user with email already registered")
     void saveNewUserEmailAlreadyRegisteredExceptionTest() {
         Optional<User> userRegistered = Optional.of(DataMock.createUser01());
-        Mockito.when(userRepository.findByEmail("ignacioencizo@gmail.com")).thenReturn(userRegistered);
+        Mockito.when(userRepository.findByEmail("dummy@gmail.com"))
+                .thenReturn(userRegistered);
         CreateUserDto createUserDto = generateCreateUserDto(DataMock.createUser01());
         Assertions.assertThrows(MailAlreadyRegisteredException.class, () -> signUpService.saveNewUser(createUserDto));
     }
@@ -54,7 +55,7 @@ class SignUpServiceImplTest {
     @Test
     @DisplayName("Save new user only with mandatory parameters")
     void saveNewUserMandatoryParametersTest() {
-        Mockito.when(userRepository.findByEmail("ignacioencizo@gmail.com")).thenReturn(Optional.empty());
+        Mockito.when(userRepository.findByEmail("dummy@gmail.com")).thenReturn(Optional.empty());
         CreateUserDto createUserDto = generateCreateUserDto(DataMock.createUser01());
         createUserDto.setCreated(null);
         createUserDto.setLastLogin(null);
@@ -69,4 +70,5 @@ class SignUpServiceImplTest {
                 () -> Assertions.assertNotNull(getUserDto.getPassword())
         );
     }
+
 }
