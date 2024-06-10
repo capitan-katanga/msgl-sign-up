@@ -4,8 +4,5 @@ import globallogic.evaluate.msglsignup.dto.CreateUserDto;
 import globallogic.evaluate.msglsignup.dto.GetUserDto;
 
 public interface SignUpService {
-
     GetUserDto saveNewUser(CreateUserDto user);
-
-    GetUserDto getUserDetailById(Integer userId);
 }

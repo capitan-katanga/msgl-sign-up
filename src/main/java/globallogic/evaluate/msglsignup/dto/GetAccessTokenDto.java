@@ -1,14 +1,9 @@
 package globallogic.evaluate.msglsignup.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 public class GetAccessTokenDto {
-
     private String accessToken;
-
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Mapper {
+
     public User toUser(CreateUserDto createUserDto) {
         return User.builder()
                 .created(createUserDto.getCreated())

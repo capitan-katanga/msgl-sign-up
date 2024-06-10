@@ -4,7 +4,6 @@ import globallogic.evaluate.msglsignup.dto.CreateUserDto;
 import globallogic.evaluate.msglsignup.dto.GetUserDto;
 import globallogic.evaluate.msglsignup.dto.Mapper;
 import globallogic.evaluate.msglsignup.exception.MailAlreadyRegisteredException;
-import globallogic.evaluate.msglsignup.exception.UserNotFoundException;
 import globallogic.evaluate.msglsignup.model.User;
 import globallogic.evaluate.msglsignup.repository.UserRepo;
 import lombok.AllArgsConstructor;
@@ -35,14 +34,6 @@ public class SignUpServiceImpl implements SignUpService {
         User user = mapper.toUser(userDto);
         userRepository.save(user);
         log.info("Registered user: {}", user);
-        return mapper.toGetUserDto(user);
-    }
-
-    public GetUserDto getUserDetailById(Integer userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> {
-            throw new UserNotFoundException("User id not found");
-        });
-        log.info("Found user detail by id: {}", user);
         return mapper.toGetUserDto(user);
     }
 

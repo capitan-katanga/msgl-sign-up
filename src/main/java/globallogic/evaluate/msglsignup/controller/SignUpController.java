@@ -22,10 +22,4 @@ public class SignUpController {
         return new ResponseEntity<>(signUpService.saveNewUser(userDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/getUserDetail/{userId}")
-    public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("userId") Integer userId) {
-        return new ResponseEntity<>(signUpService.getUserDetailById(userId), HttpStatus.OK);
-
-    }
-
 }
