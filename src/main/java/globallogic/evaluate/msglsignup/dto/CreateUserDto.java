@@ -1,6 +1,7 @@
 package globallogic.evaluate.msglsignup.dto;
 
 import globallogic.evaluate.msglsignup.model.Phone;
+import globallogic.evaluate.msglsignup.validation.PasswordConstraint;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class CreateUserDto {
     @Email(message = "Invalid email")
     private String email;
     @NotEmpty(message = "Password may not be empty")
+    @PasswordConstraint
     private String password;
     private List<Phone> phones;
 
