@@ -21,14 +21,17 @@ import java.util.Optional;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+    private final JwtUtil jwtUtil;
+    private final UserDetailsServiceImpl userDetailsService;
+
     @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    public JwtFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         if (!hasAuthorizationBearer(request)) {
             filterChain.doFilter(request, response);
             return;
@@ -42,14 +45,13 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         return !ObjectUtils.isEmpty(header) && header.startsWith("Bearer");
     }
 
     private String getAccessToken(HttpServletRequest request) {
-        String header = Optional.ofNullable(request.getHeader("Authorization")).orElseThrow(() -> new JwtException("Access denied re loco"));
+        String header = Optional.ofNullable(request.getHeader("Authorization")).orElseThrow(() -> new JwtException("Access denied"));
         return header.split(" ")[1].trim();
     }
 

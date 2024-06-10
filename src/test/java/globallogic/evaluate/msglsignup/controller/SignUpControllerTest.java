@@ -1,41 +1,42 @@
 package globallogic.evaluate.msglsignup.controller;
 
-import globallogic.evaluate.msglsignup.jwt.JwtFilter;
-import globallogic.evaluate.msglsignup.jwt.JwtUtil;
-import globallogic.evaluate.msglsignup.repository.UserRepo;
+import globallogic.evaluate.msglsignup.dto.CreateUserDto;
 import globallogic.evaluate.msglsignup.service.SignUpService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static globallogic.evaluate.msglsignup.DataMock.createUserMock;
+import static globallogic.evaluate.msglsignup.DataMock.getUserMock;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-@WebMvcTest(SignUpController.class)
-@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(MockitoExtension.class)
 class SignUpControllerTest {
 
-    @MockBean
-    private UserRepo userRepository;
-    @MockBean
-    private SignUpService signUpService;
-    @MockBean
-    private JwtFilter jwtFilter;
-    @MockBean
-    private JwtUtil jwtUtil;
-    @Autowired
-    private MockMvc mockMvc;
+    @InjectMocks
+    private SignUpController signUpController;
 
+    @Mock
+    private SignUpService signUpService;
 
     @Test
-    @DisplayName("Get user detail")
-    void getUserDetailTest() throws Exception {
-        //Todo: Mock SignUpServices method getUserDetailById
-        mockMvc.perform(get("/api/v1/getUserDetail/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON)).andExpect(jsonPath("$.name").value("ignacio"));
+    @DisplayName("Save new user")
+    void saveNewUserOkTest() {
+        when(signUpService.saveNewUser(any(CreateUserDto.class)))
+                .thenReturn(getUserMock());
+        var response = signUpController.createNewUser(createUserMock());
+        assertAll(
+                () -> assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED)),
+                () -> assertThat(response.getBody(), equalTo(getUserMock()))
+        );
     }
+
 }

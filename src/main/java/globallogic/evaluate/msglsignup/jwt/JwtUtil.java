@@ -2,7 +2,6 @@ package globallogic.evaluate.msglsignup.jwt;
 
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +11,10 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    @Autowired
-    private static final long EXPIRE_DURATION = 2 * 60 * 60 * 1000;
+    private static final long EXPIRE_DURATION = 2L * 60L * 60L * 1000L;
 
     @Value("${app.jwt.secret}")
-    protected String SECRET_KEY;
+    protected String secretKey;
 
     public String generateAccessToken(String email) {
         return Jwts.builder()
@@ -24,13 +22,13 @@ public class JwtUtil {
                 .setIssuer("global logic")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     public boolean validateAccessToken(String token) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException ex) {
             log.error("JWT expired", ex);
@@ -53,7 +51,7 @@ public class JwtUtil {
 
     private Claims parseClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
     }
