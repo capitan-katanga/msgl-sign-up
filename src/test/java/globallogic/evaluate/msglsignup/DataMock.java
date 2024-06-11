@@ -19,7 +19,7 @@ public class DataMock {
 
     public static User createUser01() {
         return User.builder().id(1).created(LocalDateTime.now()).lastLogin(null).isActive(true)
-                .name("dummy").email("dummy@gmail.com").password("Dummy123")
+                .name("dummy").email("dummy@gmail.com").password("Password12")
                 .phones(new ArrayList<>(Collections.singletonList(createPhone01()))).build();
     }
 
@@ -34,7 +34,7 @@ public class DataMock {
                 .isActive(true)
                 .name("sandokan")
                 .email("sandokan@gmail.com")
-                .password("lalala")
+                .password("Password12")
                 .phones(Lists.list(Phone.builder()
                         .id(1)
                         .number(1111111111L)
@@ -51,7 +51,7 @@ public class DataMock {
                 .isActive(true)
                 .name("sandokan")
                 .email("sandokan@gmail.com")
-                .password("lalala")
+                .password("Password12")
                 .phones(Lists.list(Phone.builder()
                         .id(1)
                         .number(1111111111L)
@@ -60,4 +60,5 @@ public class DataMock {
                         .build()))
                 .build();
     }
+
 }
