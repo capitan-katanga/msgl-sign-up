@@ -1,6 +1,7 @@
 package globallogic.evaluate.msglsignup.controller;
 
 import globallogic.evaluate.msglsignup.dto.CreateUserDto;
+import globallogic.evaluate.msglsignup.exception.MailAlreadyRegisteredException;
 import globallogic.evaluate.msglsignup.service.SignUpService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import static globallogic.evaluate.msglsignup.DataMock.getUserMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -37,6 +39,14 @@ class SignUpControllerTest {
                 () -> assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED)),
                 () -> assertThat(response.getBody(), equalTo(getUserMock()))
         );
+    }
+
+    @Test
+    @DisplayName("Save user with already registered mail")
+    void alreadyRegisteredEmailTest() {
+        when(signUpService.saveNewUser(any(CreateUserDto.class)))
+                .thenThrow(MailAlreadyRegisteredException.class);
+        assertThrows(MailAlreadyRegisteredException.class, () -> signUpController.createNewUser(CreateUserDto.builder().build()));
     }
 
 }

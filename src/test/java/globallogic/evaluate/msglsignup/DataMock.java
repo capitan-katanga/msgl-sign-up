@@ -18,8 +18,14 @@ public class DataMock {
     }
 
     public static User createUser01() {
-        return User.builder().id(1).created(LocalDateTime.now()).lastLogin(null).isActive(true)
-                .name("dummy").email("dummy@gmail.com").password("Password12")
+        return User.builder()
+                .id(1)
+                .created(LocalDateTime.now())
+                .lastLogin(null)
+                .isActive(true)
+                .name("dummy")
+                .email("dummy@gmail.com")
+                .password("Password12")
                 .phones(new ArrayList<>(Collections.singletonList(createPhone01()))).build();
     }
 
@@ -59,6 +65,14 @@ public class DataMock {
                         .countrycode("+54")
                         .build()))
                 .build();
+    }
+
+    public static CreateUserDto mapperToCreateUserDto(User user) {
+        return CreateUserDto.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .phones(user.getPhones()).build();
     }
 
 }
