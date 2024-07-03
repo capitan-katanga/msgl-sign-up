@@ -5,7 +5,6 @@ import globallogic.evaluate.msglsignup.dto.GetUserDto;
 import globallogic.evaluate.msglsignup.dto.Mapper;
 import globallogic.evaluate.msglsignup.dto.SignInDto;
 import globallogic.evaluate.msglsignup.exception.UserNotFoundException;
-import globallogic.evaluate.msglsignup.model.User;
 import globallogic.evaluate.msglsignup.repository.UserRepo;
 import globallogic.evaluate.msglsignup.security.jwt.JwtProvider;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,7 @@ public class SignInServiceImpl implements SignInService {
     private final Mapper mapper;
 
     public GetAccessTokenDto signIn(SignInDto signInDto) {
-        User user = userRepository.findByEmail(signInDto.getEmail())
+        var user = userRepository.findByEmail(signInDto.getEmail())
                 .orElseThrow(
                         () -> new UserNotFoundException("User email not found"));
 
@@ -39,7 +38,7 @@ public class SignInServiceImpl implements SignInService {
     }
 
     public GetUserDto getUserDetailById(Integer userId) {
-        User user = userRepository.findById(userId).orElseThrow(
+        var user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User id not found"));
         log.info("Found user detail by id: {}", user);
         return mapper.toGetUserDto(user);

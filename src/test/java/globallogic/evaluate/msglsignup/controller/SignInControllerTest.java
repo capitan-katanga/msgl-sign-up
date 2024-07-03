@@ -2,7 +2,8 @@ package globallogic.evaluate.msglsignup.controller;
 
 import globallogic.evaluate.msglsignup.dto.GetAccessTokenDto;
 import globallogic.evaluate.msglsignup.dto.SignInDto;
-import globallogic.evaluate.msglsignup.jwt.JwtUtil;
+import globallogic.evaluate.msglsignup.exception.UserNotFoundException;
+import globallogic.evaluate.msglsignup.security.jwt.JwtProvider;
 import globallogic.evaluate.msglsignup.service.SignInService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import static globallogic.evaluate.msglsignup.DataMock.getUserMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +29,7 @@ class SignInControllerTest {
     private SignInController signInController;
 
     @Mock
-    private JwtUtil jwtUtil;
+    private JwtProvider jwtProvider;
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -39,13 +41,22 @@ class SignInControllerTest {
     @DisplayName("Successful SignIn")
     void signInTest() {
         var accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkdW1teUBnbWFpbC5jb20iLCJpc3MiOiJnbG9iYWwgbG9naWMiLCJpYXQiOjE3MTc5NzU5MDksImV4cCI6MTcxNzk4MzEwOX0.y_TcHzcqRZPGs0Yz8mZzt8BQrYIYKUMs4O7I6bsMCOA";
-        when(jwtUtil.generateAccessToken(any(String.class)))
-                .thenReturn(accessToken);
+        when(signInService.signIn(any(SignInDto.class)))
+                .thenReturn(new GetAccessTokenDto(accessToken));
         var response = signInController.signIn(new SignInDto("", ""));
         assertAll(
                 () -> assertThat(response.getStatusCode(), equalTo(HttpStatus.OK)),
                 () -> assertThat(response.getBody(), equalTo(new GetAccessTokenDto(accessToken)))
         );
+    }
+
+    @Test
+    @DisplayName("Login with email not registered")
+    void userNotRegistered() {
+        var signInDto = new SignInDto("dummy@gmail.com", "Password12");
+        when(signInService.signIn(signInDto)).thenThrow(UserNotFoundException.class);
+        assertThrows(UserNotFoundException.class,
+                () -> signInController.signIn(signInDto));
     }
 
     @Test
