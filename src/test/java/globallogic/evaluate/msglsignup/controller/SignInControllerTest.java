@@ -14,6 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import java.util.UUID;
+
 import static globallogic.evaluate.msglsignup.DataMock.getUserMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -63,9 +65,9 @@ class SignInControllerTest {
     @DisplayName("Get existing user detail")
     void getUserDetailTest() {
         var getUserDto = getUserMock();
-        when(signInService.getUserDetailById(any(Integer.class)))
+        when(signInService.getUserDetailById(any(UUID.class)))
                 .thenReturn(getUserDto);
-        var response = signInController.getUserDetail(1);
+        var response = signInController.getUserDetail(UUID.randomUUID());
         assertAll(
                 () -> assertThat(response.getStatusCode(), equalTo(HttpStatus.OK)),
                 () -> assertThat(response.getBody(), equalTo(getUserDto))

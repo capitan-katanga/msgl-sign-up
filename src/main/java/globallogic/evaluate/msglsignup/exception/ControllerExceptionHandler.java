@@ -46,7 +46,7 @@ public class ControllerExceptionHandler {
         return getErrorMessage(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
     }
 
-    public ErrorMessage getErrorMessage(Integer code, String detail) {
+    private ErrorMessage getErrorMessage(Integer code, String detail) {
         return ErrorMessage.builder()
                 .error(Collections.singletonList(ErrorMessage.ErrorDetail.builder()
                         .timestamp(Timestamp.from(ZonedDateTime.now().toInstant()))

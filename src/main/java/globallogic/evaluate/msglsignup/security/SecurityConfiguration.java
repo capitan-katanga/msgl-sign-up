@@ -1,8 +1,8 @@
 package globallogic.evaluate.msglsignup.security;
 
-import globallogic.evaluate.msglsignup.repository.UserRepo;
+import globallogic.evaluate.msglsignup.repository.UserRepository;
 import globallogic.evaluate.msglsignup.security.jwt.JwtFilter;
-import globallogic.evaluate.msglsignup.service.UserDetailsServiceImpl;
+import globallogic.evaluate.msglsignup.service.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl(userRepo);
+        return new UserDetailsServiceImpl(userRepository);
     }
 
     @Bean

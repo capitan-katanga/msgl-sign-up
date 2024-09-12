@@ -1,2 +1,2 @@
-insert into users (id, created, email, is_active, name, password) values (1, '2022-09-07T15:37:51.564616', 'pedro@gmail.com', 'true', 'pedro', '$2a$10$WdAOczbzvssoR5Eubw2TxOBbXXG36Chu6sO90mCMOThsWIDWi27');
-insert into phones (id, countrycode, citycode, number, user_id) values (2, '+54', 315, 2342847, 1);
+insert into users (user_id, created, email, is_active, name, password) values ('6d6a6361-f4d0-4aee-949c-e03040ac3b20', '2022-09-07T15:37:51.564616', 'pedro@gmail.com', 'true', 'pedro', '$2a$10$WdAOczbzvssoR5Eubw2TxOBbXXG36Chu6sO90mCMOThsWIDWi27');
+insert into phones (phone_id, country_code, city_code, number, user_id) values ('b446d66c-c0fc-4c71-8ddc-7e47775dfbf5', '+54', 315, 2342847, '6d6a6361-f4d0-4aee-949c-e03040ac3b20');

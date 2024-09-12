@@ -1,7 +1,8 @@
 package globallogic.evaluate.msglsignup.service;
 
 import globallogic.evaluate.msglsignup.DataMock;
-import globallogic.evaluate.msglsignup.repository.UserRepo;
+import globallogic.evaluate.msglsignup.repository.UserRepository;
+import globallogic.evaluate.msglsignup.service.impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class UserDetailsServiceImplTest {
+class UserEntityDetailsServiceImplTest {
 
     @MockBean
-    UserRepo userRepository;
+    UserRepository userRepository;
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 

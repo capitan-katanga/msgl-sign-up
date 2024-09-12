@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RequestMapping("/api/v1")
 @RestController
@@ -24,7 +25,7 @@ public class SignInController {
     }
 
     @GetMapping("/getUserDetail/{userId}")
-    public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<GetUserDto> getUserDetail(@PathVariable("userId") UUID userId) {
         return new ResponseEntity<>(signInService.getUserDetailById(userId), HttpStatus.OK);
     }
 

@@ -9,10 +9,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class UserRepoTest {
+class UserEntityRepositoryTest {
 
     @Autowired
-    UserRepo userRepository;
+    UserRepository userRepository;
 
     @Test
     @DisplayName("Find user by email address")
@@ -25,7 +25,7 @@ class UserRepoTest {
                 () -> Assertions.assertEquals("pedro", user.get().getName()),
                 () -> Assertions.assertNotNull(user.get().getCreated()),
                 () -> Assertions.assertNull(user.get().getLastLogin()),
-                () -> assertFalse(user.get().getPhones().isEmpty())
+                () -> assertFalse(user.get().getPhoneEntities().isEmpty())
         );
     }
 

@@ -1,6 +1,6 @@
 package globallogic.evaluate.msglsignup.security.jwt;
 
-import globallogic.evaluate.msglsignup.service.UserDetailsServiceImpl;
+import globallogic.evaluate.msglsignup.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,7 +51,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private void setAuthenticationContext(String token, HttpServletRequest request) {
         var emailSubject = jwtProvider.getSubject(token);
         var userDetails = userDetailsService.loadUserByUsername(emailSubject);
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

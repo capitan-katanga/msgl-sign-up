@@ -1,6 +1,6 @@
 package globallogic.evaluate.msglsignup.dto;
 
-import globallogic.evaluate.msglsignup.model.Phone;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import globallogic.evaluate.msglsignup.validation.PasswordConstraint;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @Builder
 public class CreateUserDto {
-
     private LocalDateTime created;
     private LocalDateTime lastLogin;
     private boolean isActive;
@@ -24,6 +23,6 @@ public class CreateUserDto {
     @NotEmpty(message = "Password may not be empty")
     @PasswordConstraint
     private String password;
-    private List<Phone> phones;
-
+    @JsonProperty("phones")
+    private List<GetUserDto.PhoneDto> phoneDtoList;
 }

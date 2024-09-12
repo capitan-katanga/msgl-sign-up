@@ -2,7 +2,7 @@ package globallogic.evaluate.msglsignup.service;
 
 import globallogic.evaluate.msglsignup.DataMock;
 import globallogic.evaluate.msglsignup.exception.MailAlreadyRegisteredException;
-import globallogic.evaluate.msglsignup.repository.UserRepo;
+import globallogic.evaluate.msglsignup.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 class SignUpServiceImplTest {
 
     @MockBean
-    UserRepo userRepository;
+    UserRepository userRepository;
     @Autowired
     SignUpService signUpService;
 
@@ -34,7 +34,7 @@ class SignUpServiceImplTest {
                 () -> Assertions.assertNotNull(getUserDto.getCreated()),
                 () -> Assertions.assertNull(getUserDto.getLastLogin()),
                 () -> Assertions.assertTrue(getUserDto.isActive()),
-                () -> Assertions.assertFalse(getUserDto.getPhones().isEmpty())
+                () -> Assertions.assertFalse(getUserDto.getPhoneDtoList().isEmpty())
         );
     }
 
@@ -56,7 +56,7 @@ class SignUpServiceImplTest {
         createUserDto.setCreated(null);
         createUserDto.setLastLogin(null);
         createUserDto.setName(null);
-        createUserDto.setPhones(null);
+        createUserDto.setPhoneDtoList(null);
         var getUserDto = signUpService.saveNewUser(createUserDto);
         assertAll(
                 () -> Assertions.assertNotNull(createUserDto.getCreated()),
