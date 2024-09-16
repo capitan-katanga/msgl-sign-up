@@ -13,7 +13,7 @@ curl --location 'http://localhost:8080/api/v1/sign-up' \
         {
             "number": 4161601,
             "citycode": 379,
-            "contrycode": "Argentina"
+            "countrycode": "+54"
         }
     ]
 }'
