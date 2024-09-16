@@ -23,13 +23,4 @@ public class GetUserDto {
     @JsonProperty("phones")
     private List<PhoneDto> phoneDtoList;
 
-    @Data
-    @Builder
-    public static class PhoneDto {
-        private long number;
-        @JsonProperty("citycode")
-        private int cityCode;
-        @JsonProperty("countrycode")
-        private String countryCode;
-    }
 }

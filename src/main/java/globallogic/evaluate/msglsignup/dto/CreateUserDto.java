@@ -24,5 +24,5 @@ public class CreateUserDto {
     @PasswordConstraint
     private String password;
     @JsonProperty("phones")
-    private List<GetUserDto.PhoneDto> phoneDtoList;
+    private List<PhoneDto> phoneDtoList;
 }

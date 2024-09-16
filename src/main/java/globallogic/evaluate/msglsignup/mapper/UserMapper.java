@@ -2,6 +2,7 @@ package globallogic.evaluate.msglsignup.mapper;
 
 import globallogic.evaluate.msglsignup.dto.CreateUserDto;
 import globallogic.evaluate.msglsignup.dto.GetUserDto;
+import globallogic.evaluate.msglsignup.dto.PhoneDto;
 import globallogic.evaluate.msglsignup.entity.PhoneEntity;
 import globallogic.evaluate.msglsignup.entity.UserEntity;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,7 @@ public class UserMapper {
     public GetUserDto toGetUserDto(UserEntity userEntity) {
         var phoneDtoList = userEntity.getPhoneEntities() != null ?
                 userEntity.getPhoneEntities().stream()
-                        .map(phoneEntity -> GetUserDto.PhoneDto.builder()
+                        .map(phoneEntity -> PhoneDto.builder()
                                 .number(phoneEntity.getNumber())
                                 .cityCode(phoneEntity.getCityCode())
                                 .countryCode(phoneEntity.getCountryCode())

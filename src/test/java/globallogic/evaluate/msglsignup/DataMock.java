@@ -2,6 +2,7 @@ package globallogic.evaluate.msglsignup;
 
 import globallogic.evaluate.msglsignup.dto.CreateUserDto;
 import globallogic.evaluate.msglsignup.dto.GetUserDto;
+import globallogic.evaluate.msglsignup.dto.PhoneDto;
 import globallogic.evaluate.msglsignup.entity.PhoneEntity;
 import globallogic.evaluate.msglsignup.entity.UserEntity;
 import org.assertj.core.util.Lists;
@@ -47,7 +48,7 @@ public class DataMock {
                 .name("sandokan")
                 .email("sandokan@gmail.com")
                 .password("Password12")
-                .phoneDtoList(Collections.singletonList(GetUserDto.PhoneDto.builder()
+                .phoneDtoList(Collections.singletonList(PhoneDto.builder()
                         .number(1111111111L)
                         .cityCode(111)
                         .countryCode("+54")
@@ -63,7 +64,7 @@ public class DataMock {
                 .name("sandokan")
                 .email("sandokan@gmail.com")
                 .password("Password12")
-                .phoneDtoList(Lists.list(GetUserDto.PhoneDto.builder()
+                .phoneDtoList(Lists.list(PhoneDto.builder()
                         .number(1111111111L)
                         .cityCode(111)
                         .countryCode("+54")
@@ -73,7 +74,7 @@ public class DataMock {
 
     public static CreateUserDto mapperToCreateUserDto(UserEntity userEntity) {
         var phoneDtoList = userEntity.getPhoneEntities().stream()
-                .map(phoneEntity -> GetUserDto.PhoneDto.builder()
+                .map(phoneEntity -> PhoneDto.builder()
                         .number(phoneEntity.getNumber())
                         .cityCode(phoneEntity.getCityCode())
                         .countryCode(phoneEntity.getCountryCode())
