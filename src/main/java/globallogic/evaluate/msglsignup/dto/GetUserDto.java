@@ -1,7 +1,7 @@
 package globallogic.evaluate.msglsignup.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import globallogic.evaluate.msglsignup.model.Phone;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,8 +11,7 @@ import java.util.List;
 @Data
 @Builder
 public class GetUserDto {
-
-    private int id;
+    private String id;
     @JsonFormat(pattern = "MMM dd, yyyy hh:mm:ss a")
     private LocalDateTime created;
     @JsonFormat(pattern = "MMM dd, yyyy hh:mm:ss a")
@@ -21,6 +20,7 @@ public class GetUserDto {
     private String name;
     private String email;
     private String password;
-    private List<Phone> phones;
+    @JsonProperty("phones")
+    private List<PhoneDto> phoneDtoList;
 
 }
