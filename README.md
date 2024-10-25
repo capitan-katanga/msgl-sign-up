@@ -52,8 +52,8 @@ curl --location 'http://localhost:8080/api/v1/getUserDetail/6d6a6361-f4d0-4aee-9
 
 #### Sequence diagram
 
-![Flow diagram](./diagrams/diagram_de_secuencia.jpg "sequence")
+![Flow diagram](./diagrams/diagrama_de_secuencia.jpg "sequence")
 
 #### Component diagram
 
-![Flow diagram](./diagrams/diagram_de_componente.jpg "component")
+![Flow diagram](./diagrams/diagrama_de_componente.jpg "component")

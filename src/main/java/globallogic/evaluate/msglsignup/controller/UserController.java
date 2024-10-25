@@ -23,7 +23,6 @@ public class UserController {
     private final SignInService signInService;
     private final SignUpService signUpService;
 
-
     @PostMapping("/sign-in")
     public ResponseEntity<GetAccessTokenDto> signIn(@RequestBody @Valid SignInDto signInDto) {
         return new ResponseEntity<>(signInService.signIn(signInDto), HttpStatus.OK);
