@@ -64,7 +64,6 @@ public class SignInServiceImpl implements SignInService {
         );
         log.info("User found with email: {}", signInDto.getEmail());
         log.info("Authentication successful.");
-
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
         log.info("Last login date updated.");
