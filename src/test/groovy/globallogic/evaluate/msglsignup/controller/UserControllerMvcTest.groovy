@@ -7,7 +7,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -22,7 +21,7 @@ class UserControllerMvcTest extends Specification {
 
     def "Handler - Argument not valid exception"() {
         given: "A request with invalid password"
-        def requestBody = '''{
+        def requestBody = """{
             "name": "dummy",
             "email": "dummy@gmail.com",
             "password": "password12",
@@ -31,7 +30,7 @@ class UserControllerMvcTest extends Specification {
                 "citycode": 379,
                 "contrycode": "Argentina"
             }]
-        }'''
+        }"""
 
         when: "The sign-up endpoint is invoked"
         def result = mockMvc.perform(post("/api/v1/sign-up")
@@ -70,6 +69,40 @@ class UserControllerMvcTest extends Specification {
                 .andExpect(jsonPath('$.error[0].timestamp').isNotEmpty())
                 .andExpect(jsonPath('$.error[0].codigo').value("400"))
                 .andExpect(jsonPath('$.error[0].detail').value("The email: pedro@gmail.com is already registered"))
+    }
+
+    def "Handler - User not found"() {
+        given: "A request with email not registered"
+        def requestBody = "{\"email\": \"dummy@gmail.com\",\"password\": \"Password12\"\n}"
+
+        when: "The sign-in endpoint is invoked"
+        def result = mockMvc.perform(post("/api/v1/sign-in")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andDo(print())
+
+        then: "A NotFound status is returned with the expected error details"
+        result.andExpect(status().isNotFound())
+                .andExpect(jsonPath('$.error[0].timestamp').isNotEmpty())
+                .andExpect(jsonPath('$.error[0].codigo').value("404"))
+                .andExpect(jsonPath('$.error[0].detail').value("User email not found"))
+    }
+
+    def "Handler - Bad credentials"() {
+        given: "A request with email not registered"
+        def requestBody = "{\"email\": \"pedro@gmail.com\",\"password\": \"Password12\"\n}"
+
+        when: "The sign-in endpoint is invoked"
+        def result = mockMvc.perform(post("/api/v1/sign-in")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andDo(print())
+
+        then: "A BadCredential status is returned with the expected error details"
+        result.andExpect(status().isUnauthorized())
+                .andExpect(jsonPath('$.error[0].timestamp').isNotEmpty())
+                .andExpect(jsonPath('$.error[0].codigo').value("401"))
+                .andExpect(jsonPath('$.error[0].detail').value("Bad credentials"))
     }
 
 }

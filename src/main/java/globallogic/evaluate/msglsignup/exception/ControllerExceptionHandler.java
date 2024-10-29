@@ -36,7 +36,7 @@ public class ControllerExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorMessageDto userNotFound(UserNotFoundException exception) {
         log.error("User not found exception ", exception);
-        return getErrorMessage(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
+        return getErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
     }
 
     @ExceptionHandler(BadCredentialsException.class)
