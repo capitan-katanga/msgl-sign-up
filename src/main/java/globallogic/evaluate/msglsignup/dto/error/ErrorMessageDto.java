@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ErrorMessage {
+public class ErrorMessageDto {
     private List<ErrorDetail> error;
 
     @Getter
